@@ -9,10 +9,10 @@ import java.io.IOException;
 
 /**
  * @author lixinyao
- * @create 2020-11-2020/11/4-20:16
+ * @create 2020-12-2020/12/3-16:36
  **/
-@WebServlet("/ClientLoginServlet")
-public class ClientLoginServelet extends HttpServlet {
+@WebServlet(name = "CilentLoginServlet",urlPatterns = "/clientLogin")
+public class CilentLoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doGet(req, resp);
