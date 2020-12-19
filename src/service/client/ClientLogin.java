@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * @create 2020-12-2020/12/11-17:41
  **/
 public class ClientLogin {
-    private final static String sqlClientLogin="select name,loginin_day,loginin_time from client where password='";
+    private final static String sqlClientLogin="select name,study_ID,loginin_day,loginin_time from client where password='";
     private final static String sqlByStudyID="and study_ID='";
     private final static String sqlByTel="tel_num='";
 
@@ -44,7 +44,7 @@ public class ClientLogin {
         resultString=runSQL.getFindResult();
         System.out.println("resultString"+resultString);
         //将查询的结果Array数组转换为JSON字符串
-        String runsqlReuslt= JsonTools.toJson(resultString,3);
+        String runsqlReuslt= JsonTools.toJson(resultString,4);
         System.out.println("runsqlResult"+runsqlReuslt);
         //将结果返回给LogininServlet
         return runsqlReuslt;

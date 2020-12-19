@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -12,45 +13,22 @@ import java.util.Scanner;
  * @create 2020-12-2020/12/12-17:17
  **/
 public class Test {
-    //mysql驱动包名
-    private static final String DRIVER_NAME = "com.mysql.jdbc.Driver";
-    //数据库连接地址.0
-
-    private static final String URL = "jdbc:mysql://localhost:3306/canteenexpress";
-    //用户名,更换成你自己的用户名，此处为root用户
-    private static final String USER_NAME = "root";
-    //密码，更换成你自己设定的密码，此处为:admin
-    private static final String PASSWORD = "123456789";
-    public static void main(String[] args){
-        Connection connection = null;
-        try {
-            //加载mysql的驱动类
-            Class.forName(DRIVER_NAME);
-            //获取数据库连接
-            connection = DriverManager.getConnection(URL, USER_NAME, PASSWORD);
-            //mysql查询语句
-            String sql = "SELECT name FROM client";
-            PreparedStatement prst = connection.prepareStatement(sql);
-            //结果集
-            ResultSet rs = prst.executeQuery();
-            while (rs.next()) {
-                System.out.println("用户名:" + rs.getString("name"));
-            }
-            rs.close();
-            prst.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+    public static void main(String[] args) {
+        System.out.println(getFourRandom());
+    }
+    public static String getFourRandom(){
+        Random random=new Random();
+        String fourRandom=random.nextInt(1000)+"";
+        int randLength=fourRandom.length();
+        if(randLength<4){
+            for(int i=1;i<=4-randLength;i++){
+                fourRandom="0"+fourRandom;
             }
         }
+        return fourRandom;
     }
     }
+
     /*
      Properties props=new Properties();
         props.put("python.home","D:\\jython\\jythoninstall\\Lib");

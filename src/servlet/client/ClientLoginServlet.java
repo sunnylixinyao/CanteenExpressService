@@ -1,6 +1,7 @@
 package servlet.client;
 
 import service.client.ClientLogin;
+import service.client.ClientUpdateTime;
 import util.DataResultError;
 import util.JsonTools;
 
@@ -51,8 +52,21 @@ public class ClientLoginServlet extends HttpServlet {
         //写入结果
         try {
             if (!sqlRunResult.isEmpty()) {
-              sqlRunResult = "{\"RT\":" + DataResultError.M000000.getMSG() + ",\"DATA\":" + sqlRunResult + "}";//成功
-                out.print(sqlRunResult); //成功
+                //将查询返回的String结果转换为数组，方便name和password，传入更新时间service
+                ArrayList<String> update=JsonTools.jsonToArray(sqlRunResult);
+                System.out.println(update.toString());
+                //成功之后更新登录时间
+                ClientUpdateTime updateTime=new ClientUpdateTime(update.get(1),update.get(3));
+                int updatestate=updateTime.generateRunSql();
+                //修改返回的JSON数据
+                sqlRunResult = "{\"RT\":" + DataResultError.M000000.getMSG() + ",\"DATA\":" + sqlRunResult + "}";//成功
+                if (updatestate==1){
+                    //说明更新成功
+                    out.print(sqlRunResult); //向前端返回成功，并携带数据
+                }else {
+                    //更新出现错误，向移动端返回更新时间错误
+                    out.print("{\"RT\":" + DataResultError.M000002.getMSG() + ",\"DATA\":" + "{}"+ "}");
+                }
             } else {
                 out.print("{\"RT\":" + DataResultError.M000001.getMSG() + ",\"DATA\":" + "{}"+ "}"); //请求成功，但是没有该账号
             }
