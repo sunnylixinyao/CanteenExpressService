@@ -1,5 +1,7 @@
 package servlet.client;
 
+import service.client.ClientRegister;
+import util.DataResultError;
 import util.JsonTools;
 
 import javax.servlet.ServletException;
@@ -42,5 +44,24 @@ public class ClientRegisterServlet extends HttpServlet {
         //将json数据转换为Array数组
         ArrayList<String> realData = JsonTools.jsonToArray(data);
         System.out.println("RealData"+realData);
+        int result=this.getResult(realData.get(1),realData.get(5),realData.get(7),realData.get(3));
+        String returndata;
+        //开始向前端传递数据
+        if(result==1){
+            //说明成功
+            returndata = "{\"RT\":" + DataResultError.M000000.getMSG()+"}";//成功
+        }else if(result==0){
+            //用户已经注册过账号
+            returndata = "{\"RT\":" + DataResultError.M000004.getMSG()+"}";//已注册
+        }else {
+            returndata = "{\"RT\":" + DataResultError.M999999.getMSG()+"}";//其他错误
+        }
+        out.print(returndata);
+        out.flush();
+    }
+    private int  getResult(String name,String study_ID,String tel,String password){
+        ClientRegister clientRegister=new ClientRegister(name,study_ID,tel,password);
+        int result=clientRegister.generateSql();
+        return result;
     }
 }

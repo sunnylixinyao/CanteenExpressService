@@ -50,7 +50,7 @@ public class ClientVerifyCodeServlet extends HttpServlet {
         try {
             if(!verifyCode.isEmpty()){
                 //说明验证码获取成功
-                verifyCode = "{\"RT\":" + DataResultError.M000000.getMSG() + ",\"DATA\":" + verifyCode + "}";//成功
+                verifyCode = "{\"RT\":" + DataResultError.M000000.getMSG() + ",\"DATA\":" +"\"" +verifyCode +"\"" + "}";//成功
                 out.print(verifyCode);
             }else {
                 out.print("{\"RT\":" + DataResultError.M000003.getMSG() + ",\"DATA\":" + "{}"+ "}"); //没有获取到验证码
