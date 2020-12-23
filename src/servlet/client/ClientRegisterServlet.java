@@ -47,10 +47,10 @@ public class ClientRegisterServlet extends HttpServlet {
         int result=this.getResult(realData.get(1),realData.get(5),realData.get(7),realData.get(3));
         String returndata;
         //开始向前端传递数据
-        if(result==1){
+        if(result==0){
             //说明成功
             returndata = "{\"RT\":" + DataResultError.M000000.getMSG()+"}";//成功
-        }else if(result==0){
+        }else if(result==1){
             //用户已经注册过账号
             returndata = "{\"RT\":" + DataResultError.M000004.getMSG()+"}";//已注册
         }else {

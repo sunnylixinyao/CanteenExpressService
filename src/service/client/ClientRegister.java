@@ -51,7 +51,7 @@ public class ClientRegister {
             state=register();
         }else{
             //说明用户已经注册过了，需要要登录
-            state=0;
+            state=1;
         }
         return state;
     }

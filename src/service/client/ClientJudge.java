@@ -28,7 +28,6 @@ public class ClientJudge {
 
     //查询
     public boolean generateSql(){
-        System.out.println("用户是否登录的判断结果为");
         //拼接sql语句
         String realsql=sqlJudgeByNID+name+"'"+sqlByStudy_ID+study_ID+"'";
         ArrayList<String> resultdata=new ArrayList<>();
@@ -46,6 +45,7 @@ public class ClientJudge {
             isRegister=true;
         }
        // System.out.println("isRegister"+isRegister);
+        System.out.println("用户是否登录的判断结果为"+isRegister);
         return isRegister;
     }
 }
