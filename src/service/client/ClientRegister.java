@@ -28,6 +28,17 @@ public class ClientRegister {
     private final static String sqlregister="insert into client(name,study_ID,tel_num,password,register_day,register_time,loginin_day,loginin_time) values(";
     private final static String sqlcomma=",";
 
+
+    //在创建用户的同时也创建一张对应的表，来表示该用户的朋友
+    private final static String sqlCreateTable="CREATE TABLE `";
+    private final static String createTableByUserName="` (\n" +
+            "  `friend_id` INT(11) NOT NULL AUTO_INCREMENT,\n" +
+            "  `friend_name` VARCHAR(30) NOT NULL,\n" +
+            "  `friend_study_id` VARCHAR(10) NOT NULL,\n" +
+            "  `frist_connect_time` TIME NOT NULL,\n" +
+            "  `last_connect_time` TIME NOT NULL,\n" +
+            "  PRIMARY KEY (`friend_id`)\n" +
+            ") ENGINE=INNODB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8";
     //声明注册时间和登录时间
     private Date register_day;
     private Time register_time;
@@ -63,6 +74,10 @@ public class ClientRegister {
         String realsql=sqlregister+"'"+name+"'"+sqlcomma+"'"+study_ID+"'"+sqlcomma+"'"+tel+"'"+sqlcomma+"'"+password+"'"+sqlcomma+"'"+register_day+"'"+sqlcomma+"'"+register_time+"'"+sqlcomma+"'"+register_day+"'"+sqlcomma+"'"+register_time+"'"+")";
         RunSQL runSQL=new RunSQL();
         runSQL.updateSingle(realsql);
+        String createTableFriends=sqlCreateTable+name+"_friends"+ createTableByUserName;
+        RunSQL runsql=new RunSQL();
+        runsql.updateSingle(createTableFriends);
+        System.out.println("创建好了对应的朋友表格"+runsql.getUpdateResult());
         int result=runSQL.getUpdateResult();
         System.out.println("插入结果是"+result);
         //0成功
